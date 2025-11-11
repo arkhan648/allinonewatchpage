@@ -18,7 +18,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 /* ================================== */
 .site-header { position: sticky; top: 0; left: 0; width: 100%; background: var(--bg-primary); border-bottom: 1px solid var(--border-color); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; margin-bottom: 15px; }
 .header-left { display: flex; align-items: center; gap: 12px; flex-grow: 1; min-width: 0; }
-.site-logo img { height: 40px; border-radius: 6px; display: block; }
 .header-right { display: flex; align-items: center; gap: 12px; }
 .header-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.2s ease-in-out; cursor: pointer; white-space: nowrap; background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
 .header-btn:hover { background-color: #2a2a2a; border-color: var(--text-secondary); transform: translateY(-1px); }
@@ -44,14 +43,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 #watch-description { color: var(--text-primary); font-size: 1rem; line-height: 1.6; margin-top: 0.5rem; }
 
 /* --- Stream List Section (Shared styles from Match Info) --- */
-
-
 .viewers-count {color:#dc2626cc;}
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;}
 .section-header h2 { font-size: 1.5rem; }
-.back-button-styled { background: #111; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; padding: 8px 14px; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
-.back-button-styled:hover { background-color: var(--bg-secondary); color: var(--text-primary); border-color: var(--accent-red); }
-.back-button-styled .separator { color: var(--accent-red); }
 #sources-summary { font-size: 0.9rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1.5rem; padding-bottom: 1rem; min-height: 22px; }
 .stream-source { background-color: var(--bg-secondary); border: 1px solid #fbbf24b3; border-radius: 0.75rem; margin-bottom: 1.5rem; padding: 1rem 1.25rem; box-shadow: 0 4px 12px var(--shadow-color); }
 .stream-source.hidden-source { display: none; }
@@ -61,9 +55,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .source-desc { display: block; margin-bottom: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; }
 .stream-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); margin: 0.5rem 0; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: var(--text-primary); }
 .stream-row:hover:not(.active) { background-color: #1a1a1a; border-color: var(--accent-primary); transform: translateY(-2px); }
-
 .stream-label { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; }
-
 .quality-tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 400; color: var(--accent-red); text-transform: uppercase; min-width: 35px; text-align: center; }
 .quality-tag.hd { background-color: #dc262633; }
 .quality-tag.sd { background-color: #26262680; color: var(--text-primary);}
@@ -87,7 +79,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .is-loading > * { visibility: hidden; }
 .is-loading::after { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; transform: skewX(-20deg); background-image: linear-gradient(90deg, transparent, var(--shimmer-color), transparent); animation: shimmer 1.8s infinite; }
 @media (max-width: 768px) {
-  .site-logo { display: none; }
   .site-header { padding: 8px 12px; }
   .header-btn { padding: 8px 10px; font-size: 13px; }
   #watch-title { font-size: 1.3rem; }
@@ -119,7 +110,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .content-wrapper {
   display: flex;
   align-items: flex-start;
-  
   max-width: 1400px; /* Increased max-width for new padding */
   margin: 0 auto;
 }
@@ -237,13 +227,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
   font-weight: 500;
 }
 
-/* New styles for the "and more..." link */
 .more-members-link {
     display: block;
     text-align: center;
     margin-top: 1rem;
-    
-    
     font-size: 0.95rem;
 }
 
@@ -286,7 +273,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
   .fullpage { padding: 0 1rem; } /* Adjusted padding for smaller tablets */
 }
 
-
 .disclaimer-box{background:#111;color:#ddd;padding:15px 20px;margin-bottom:20px;border:1px solid #333;border-radius:8px;max-width:900px;margin-left:auto;margin-right:auto;text-align:left;box-shadow:0 0 10px rgba(0,0,0,.4)}.disclaimer-box h3{margin:0 0 8px;font-size:16px;color:#fc0;text-transform:uppercase;letter-spacing:1px}.disclaimer-box p{margin:0;font-size:14px;line-height:1.5;padding-bottom:10px!important}.disclaimer-box a{color:#fc0;text-decoration:underline}.disclaimer-box a:hover{color:#fff}
 
 footer {
@@ -294,7 +280,7 @@ footer {
 	background:#0b1220;color:#aaa;padding:1rem;margin-top:2rem;
 }
 .footer-menu {
-	list-style:none;display:flex;gap:10px
+	list-style:none;display:flex;gap:10px;
 	padding:0;margin-bottom:10px;justify-content:center;flex-wrap:wrap
 }
 .footer-menu a{color:#aaa;text-decoration:none;font-size:14px;display:inline-block;padding:5px}.footer-menu a:hover{color:#fc0}footer p{padding-bottom:50px}
@@ -320,7 +306,6 @@ footer {
 @media (max-width: 480px) {
   #sticky-footer-ad .ad-content {padding: 0 10px;}
 }
-
 
 /* Amazon Advertisement Section */
 .amazonadvertisement {
