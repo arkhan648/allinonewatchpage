@@ -102,15 +102,8 @@ async function initializeWatchPage() {
         descEl.textContent = "Please select a stream from a match page.";
         document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
         playerContainerEl.innerHTML = `<div class="error-message">Invalid stream URL hash.</div>`;
-        document.getElementById("back-button").addEventListener("click", () => { window.history.back(); });
         return;
     }
-
-    const { matchId } = urlData;
-    
-    document.getElementById("back-button").onclick = () => {
-        window.location.href = `../Matchinformation/?id=${matchId}`;
-    };
 
     titleEl.textContent = '';
     descEl.textContent = '';
@@ -123,7 +116,7 @@ async function initializeWatchPage() {
     sourcesSummaryEl.classList.add('skeleton');
 
     try {
-        const { sourceName, quality, streamNumber } = urlData;
+        const { matchId, sourceName, quality, streamNumber } = urlData;
 
         const res = await fetch("https://streamed.pk/api/matches/all");
         if (!res.ok) throw new Error("Could not fetch match list");
@@ -145,11 +138,11 @@ async function initializeWatchPage() {
         
 		
         const qualityLabel = activeStream.hd ? "HD" : "SD";
-const pageTitle = `Live ${match.title} Stream Link (${activeStream.source.charAt(0).toUpperCase() + activeStream.source.slice(1)} ${qualityLabel} ${activeStream.streamNo})`;
-document.title = pageTitle;
-titleEl.textContent = pageTitle;
+        const pageTitle = `Live ${match.title} Stream Link (${activeStream.source.charAt(0).toUpperCase() + activeStream.source.slice(1)} ${qualityLabel} ${activeStream.streamNo})`;
+        document.title = pageTitle;
+        titleEl.textContent = pageTitle;
 
-        descEl.textContent = `${match.title} live on nflbite.top. Join the stream and chat with others in our live chat!`;
+        descEl.textContent = `${match.title} live on buffstreams.world. Join the stream and chat with others in our live chat!`;
         playerEl.src = activeStream.embedUrl;
 
         streamsContainer.innerHTML = "";
