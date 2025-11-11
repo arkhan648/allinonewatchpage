@@ -1,14 +1,3 @@
-// =================================================================================
-// WATCH.JS - Watch Page Logic (Final Corrected and Complete Version)
-// =================================================================================
-
-// ---------------------------
-// GLOBAL CACHE & HELPERS
-// ---------------------------
-let allMatchesCache = [];
-let searchDataFetched = false;
-
-
 // ---------------------------
 // PAGE-SPECIFIC LOGIC
 // ---------------------------
@@ -304,10 +293,8 @@ async function loadDiscordWidget() {
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeWatchPage();
-    setupSearch(); 
     loadDiscordWidget();
 });
 
 
 window.addEventListener('hashchange', initializeWatchPage);
-
