@@ -8,80 +8,6 @@
 let allMatchesCache = [];
 let searchDataFetched = false;
 
-function createMatchCard(match) {
-    const card = document.createElement("div");
-    card.className = "search-result-item";
-    const poster = document.createElement("img");
-    poster.className = "match-poster";
-    poster.src = (match.teams?.home?.badge && match.teams?.away?.badge) ? `https://streamed.pk/api/images/poster/${match.teams.home.badge}/${match.teams.away.badge}.webp` : "/Fallbackimage.webp";
-    poster.alt = match.title || "Match Poster";
-    poster.onerror = () => { poster.onerror = null; poster.src = "/Fallbackimage.webp"; };
-    const { badge, badgeType, meta } = formatDateTime(match.date);
-    const statusBadge = document.createElement("div");
-    statusBadge.classList.add("status-badge", badgeType);
-    statusBadge.textContent = badge;
-    const info = document.createElement("div");
-    info.classList.add("match-info");
-    const title = document.createElement("div");
-    title.classList.add("match-title");
-    title.textContent = match.title || "Untitled Match";
-    const metaRow = document.createElement("div");
-    metaRow.classList.add("match-meta-row");
-    const category = document.createElement("span");
-    category.classList.add("match-category");
-    category.textContent = match.category ? match.category.charAt(0).toUpperCase() + match.category.slice(1) : "Unknown";
-    const timeOrDate = document.createElement("span");
-    timeOrDate.textContent = meta;
-    metaRow.append(category, timeOrDate);
-    info.append(title, metaRow);
-    card.append(poster, statusBadge, info);
-    card.addEventListener("click", () => { window.location.href = `../Matchinformation/?id=${match.id}`; });
-    return card;
-}
-function formatDateTime(timestamp) {
-    const date = new Date(timestamp), now = new Date();
-    const isToday = date.toDateString() === now.toDateString();
-    const timeFormat = { hour: "numeric", minute: "2-digit" };
-    if (timestamp <= now.getTime()) return { badge: "LIVE", badgeType: "live", meta: date.toLocaleTimeString("en-US", timeFormat) };
-    if (isToday) return { badge: date.toLocaleTimeString("en-US", timeFormat), badgeType: "date", meta: "Today" };
-    return { badge: date.toLocaleDateString("en-US", { month: "short", day: "numeric" }), badgeType: "date", meta: date.toLocaleTimeString("en-US", timeFormat) };
-}
-async function fetchSearchData() {
-    if (searchDataFetched) return;
-    try {
-        const res = await fetch("https://streamed.pk/api/matches/all");
-        if (!res.ok) throw new Error("Failed to fetch search data");
-        const allMatches = await res.json();
-        const map = new Map();
-        allMatches.forEach(m => map.set(m.id, m));
-        allMatchesCache = Array.from(map.values());
-        searchDataFetched = true;
-    } catch (err) { console.error("Error fetching search data:", err); }
-}
-function setupSearch() {
-    const searchInput = document.getElementById("search-input");
-    const searchOverlay = document.getElementById("search-overlay");
-    const overlayInput = document.getElementById("overlay-search-input");
-    const overlayResults = document.getElementById("overlay-search-results");
-    const searchClose = document.getElementById("search-close");
-    const openSearch = () => { fetchSearchData(); searchOverlay.style.display = "flex"; overlayInput.value = searchInput.value; overlayInput.focus(); };
-    searchInput.addEventListener("focus", openSearch);
-    searchClose.addEventListener("click", () => { searchOverlay.style.display = "none"; });
-    searchOverlay.addEventListener("click", (e) => { if (!e.target.closest(".search-overlay-content")) searchOverlay.style.display = "none"; });
-    overlayInput.addEventListener("input", function() {
-        const q = this.value.trim().toLowerCase();
-        overlayResults.innerHTML = "";
-        if (!q || !searchDataFetched) return;
-        const filtered = allMatchesCache.filter(m => (m.title || "").toLowerCase().includes(q) || (m.teams?.home?.name || "").toLowerCase().includes(q) || (m.teams?.away?.name || "").toLowerCase().includes(q));
-        filtered.slice(0, 12).forEach(match => { overlayResults.appendChild(createMatchCard(match)); });
-    });
-    overlayInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const q = overlayInput.value.trim();
-            if (q) window.location.href = `../SearchResult/?q=${encodeURIComponent(q)}`;
-        }
-    });
-}
 
 // ---------------------------
 // PAGE-SPECIFIC LOGIC
@@ -384,3 +310,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 window.addEventListener('hashchange', initializeWatchPage);
+
