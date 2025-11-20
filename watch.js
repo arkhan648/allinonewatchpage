@@ -1,293 +1,155 @@
-// ---------------------------
-// PAGE-SPECIFIC LOGIC
-// ---------------------------
+// --- CONFIGURATION ---
+const config = {
+    overlayLink: "https://1wksrw.com/?open=register&p=h8zt", 
+    bet365Link: "https://1wksrw.com/?open=register&p=h8zt", 
+    discordServerId: "1422384816472457288"
+};
 
-function parseUrlFromHash() {
+// --- 1. OVERLAY AD LOGIC ---
+function initOverlay() {
+    const overlay = document.getElementById('video-overlay-ad');
+    if(overlay) {
+        overlay.addEventListener('click', () => {
+            window.open(config.overlayLink, '_blank');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 300);
+        });
+    }
+}
+
+// --- 2. IN-FEED AD CREATION (Top Recommended Ad) ---
+function createTopAd() {
+    const adDiv = document.createElement('div');
+    adDiv.className = 'stream-infeed-ad';
+    // Simple, compact HTML to ensure mobile responsiveness
+    adDiv.innerHTML = `
+        <a href="${config.bet365Link}" target="_blank" class="infeed-content">
+            <div class="infeed-left">
+                <span class="rec-tag"><i class="fa-solid fa-star"></i> REC</span>
+                <span style="font-weight:bold;">Bet365: Watch Live</span>
+            </div>
+            <div class="infeed-btn">Watch <i class="fa-solid fa-play"></i></div>
+        </a>
+    `;
+    return adDiv;
+}
+
+// --- 3. STREAM PARSING & RENDERING ---
+function parseUrl() {
     const hash = window.location.hash.substring(1); 
     if (!hash) return null;
-
-    const pathParts = hash.replace(/^\//, '').split('/');
-    if (pathParts.length < 3) return null;
-
-    const [matchId, sourceName, streamIdentifier] = pathParts;
-    const quality = streamIdentifier.substring(0, 2);
-    const streamNumber = parseInt(streamIdentifier.substring(2), 10);
-
-    if (!matchId || !sourceName || !['hd', 'sd'].includes(quality) || isNaN(streamNumber)) {
-        return null;
-    }
-    return { matchId, sourceName, quality, streamNumber };
+    const parts = hash.replace(/^\//, '').split('/');
+    if (parts.length < 3) return null;
+    return { matchId: parts[0], source: parts[1], qual: parts[2].substring(0,2), num: parseInt(parts[2].substring(2)) };
 }
 
-function renderStreamRow(stream, index, match, activeStream) {
-    if (!activeStream) activeStream = {};
-
-	const isActive =
-    stream.source === activeStream.source &&
-    (stream.hd ? 'hd' : 'sd') === (activeStream.hd ? 'hd' : 'sd') &&
-    stream.streamNo === activeStream.streamNo;
-
-    const row = isActive ? document.createElement("div") : document.createElement("a");
-    
-    row.className = "stream-row";
-    if (isActive) {
-        row.classList.add("active");
-    } else {
-        const quality = stream.hd ? 'hd' : 'sd';
-        row.href = `#/${match.id}/${stream.source}/${quality}${stream.streamNo}`;
-    }
-
-    const qualityTagClass = stream.hd ? "hd" : "sd";
-    const qualityText = stream.hd ? "HD" : "SD";
-    const viewersHTML = stream.viewers > 0 ? `<div class="viewers-count"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>${stream.viewers}</div>` : '';
-    const languageHTML = `<div class="stream-lang"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>${stream.language || "English"}</div>`;
-    const statusIcon = isActive ? `<span class="status-running">Running</span>` : `<span class="open-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></span>`;
-
-    row.innerHTML = `
-        <div class="stream-label">
-            <span class="quality-tag ${qualityTagClass}">${qualityText}</span>
-            <span>Stream ${index + 1}</span>
-            ${statusIcon}
-        </div>
-        <div class="stream-meta">
-            ${viewersHTML}
-            ${languageHTML}
-        </div>`;
-    return row;
-}
-
-async function renderStreamSource(source, match, activeStream) {
-    const sourceMeta = { alpha: "Most reliable (720p 30fps)", charlie: "Good backup", intel: "Large event coverage", admin: "Admin added streams", hotel: "Very high quality feeds", foxtrot: "Good quality, offers home/away feeds", delta: "Reliable backup", echo: "Great quality overall" };
-    const description = sourceMeta[source.source.toLowerCase()] || "Reliable streams";
-    try {
-        const res = await fetch(`https://streamed.pk/api/stream/${source.source}/${source.id}`);
-        if (!res.ok) return null;
-        let streams = await res.json();
-        if (!streams || streams.length === 0) return null;
-        
-        streams.sort((a, b) => (b.hd - a.hd) || ((b.viewers || 0) - (a.viewers || 0)));
-        
-        const sourceContainer = document.createElement("div");
-        sourceContainer.className = "stream-source";
-        if (streams.some(s => s.id === activeStream.id)) {
-            sourceContainer.dataset.containsActive = "true";
-        }
-
-        sourceContainer.innerHTML = `<div class="source-header"><span class="source-name">${source.source.charAt(0).toUpperCase() + source.source.slice(1)}</span><span class="source-count">${streams.length} streams</span></div><small class="source-desc">✨ ${description}</small>`;
-        
-        const fragment = document.createDocumentFragment();
-        streams.forEach((stream, i) => fragment.appendChild(renderStreamRow(stream, i, match, activeStream)));
-        sourceContainer.appendChild(fragment);
-        
-        return sourceContainer;
-    } catch (err) { 
-        console.error(`Error fetching source ${source.source}:`, err);
-        return null; 
-    }
-}
-
-async function initializeWatchPage() {
-    const urlData = parseUrlFromHash();
-
+async function loadPage() {
+    const data = parseUrl();
     const titleEl = document.getElementById("watch-title");
-    const descEl = document.getElementById("watch-description");
     const playerEl = document.getElementById("stream-player");
-    const playerContainerEl = document.getElementById("stream-player-container");
-    const streamsContainer = document.getElementById("streams-container");
-    const sourcesSummaryEl = document.getElementById('sources-summary');
-    const showAllBtn = document.getElementById("show-all-sources-btn");
+    const container = document.getElementById("streams-container");
     
-    if (!urlData) {
-        titleEl.textContent = "Error: Invalid Stream Link";
-        descEl.textContent = "Please select a stream from a match page.";
-        document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
-        playerContainerEl.innerHTML = `<div class="error-message">Invalid stream URL hash.</div>`;
+    container.innerHTML = ''; 
+    document.querySelectorAll('.skeleton').forEach(e => e.classList.add('skeleton'));
+
+    if (!data) {
+        titleEl.textContent = "Select a stream from the schedule.";
+        document.querySelectorAll('.skeleton').forEach(e => e.classList.remove('skeleton'));
         return;
     }
 
-    titleEl.textContent = '';
-    descEl.textContent = '';
-    titleEl.classList.add('skeleton');
-    descEl.classList.add('skeleton');
-    playerContainerEl.classList.add('skeleton');
-    playerEl.src = 'about:blank';
-    streamsContainer.innerHTML = '<div class="stream-source is-loading"><div class="source-header"><span class="source-name">&nbsp;</span><span class="source-count">&nbsp;</span></div><small class="source-desc">&nbsp;</small><div class="stream-row"></div><div class="stream-row"></div></div>';
-    sourcesSummaryEl.textContent = '';
-    sourcesSummaryEl.classList.add('skeleton');
-
     try {
-        const { matchId, sourceName, quality, streamNumber } = urlData;
-
         const res = await fetch("https://streamed.pk/api/matches/all");
-        if (!res.ok) throw new Error("Could not fetch match list");
-        const allMatches = await res.json();
-        const match = allMatches.find(m => String(m.id) === String(matchId));
+        const matches = await res.json();
+        const match = matches.find(m => String(m.id) === String(data.matchId));
+        
         if (!match) throw new Error("Match not found");
 
-        const sourceForStream = match.sources.find(s => s.source === sourceName);
-        if (!sourceForStream) throw new Error("Source not found for this match");
+        titleEl.textContent = `${match.title} - Live Stream`;
+        document.title = `Watch ${match.title}`;
+        document.getElementById("odds-match-title").textContent = match.title.toUpperCase();
 
-        const streamRes = await fetch(`https://streamed.pk/api/stream/${sourceForStream.source}/${sourceForStream.id}`);
-        if (!streamRes.ok) throw new Error(`Could not fetch streams from source: ${sourceName}`);
-        
+        const srcObj = match.sources.find(s => s.source === data.source);
+        const streamRes = await fetch(`https://streamed.pk/api/stream/${srcObj.source}/${srcObj.id}`);
         const streams = await streamRes.json();
-        const activeStream = streams.find(s => (s.hd ? 'hd' : 'sd') === quality && s.streamNo === streamNumber);
-        if (!activeStream) throw new Error("Stream not found.");
-
-        document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
+        const active = streams.find(s => (s.hd?'hd':'sd') === data.qual && s.streamNo === data.num);
         
-		
-        const qualityLabel = activeStream.hd ? "HD" : "SD";
-        const pageTitle = `Live ${match.title} Stream Link (${activeStream.source.charAt(0).toUpperCase() + activeStream.source.slice(1)} ${qualityLabel} ${activeStream.streamNo})`;
-        document.title = pageTitle;
-        titleEl.textContent = pageTitle;
+        playerEl.src = active ? active.embedUrl : 'about:blank';
 
-        descEl.textContent = `${match.title} live on buffstreams.world. Join the stream and chat with others in our live chat!`;
-        playerEl.src = activeStream.embedUrl;
+        document.querySelectorAll('.skeleton').forEach(e => e.classList.remove('skeleton'));
 
-        streamsContainer.innerHTML = "";
+        // --- INJECT ADS & STREAMS ---
+        
+        // 1. Inject Recommended Ad
+        container.appendChild(createTopAd());
 
-        if (match.sources && match.sources.length > 0) {
-            const sourcePromises = match.sources.map(source => renderStreamSource(source, match, activeStream));
-            const sourceElements = (await Promise.all(sourcePromises)).filter(Boolean);
-            const totalSources = sourceElements.length;
-
-            if (totalSources === 0) {
-                streamsContainer.innerHTML = `<p class="no-results">No other active streams found.</p>`;
-                sourcesSummaryEl.textContent = 'No other sources available';
-                return;
-            }
+        // 2. Render Stream Sources (FIXED BROKEN SECTIONS)
+        match.sources.forEach(async (source) => {
+            const sDiv = document.createElement('div');
+            sDiv.className = 'stream-source';
             
-            const INITIAL_SOURCES_TO_SHOW = 3;
-            const activeSourceIndex = sourceElements.findIndex(el => el.dataset.containsActive === "true");
-            const showAllInitially = activeSourceIndex !== -1 && activeSourceIndex >= INITIAL_SOURCES_TO_SHOW;
-
-            if (showAllInitially) {
-                sourceElements.forEach(el => streamsContainer.appendChild(el));
-                sourcesSummaryEl.textContent = `Showing all ${totalSources} sources`;
-                showAllBtn.classList.add('hidden');
-            } else {
-                sourceElements.forEach((el, index) => {
-                    if (index >= INITIAL_SOURCES_TO_SHOW) el.classList.add('hidden-source');
-                    streamsContainer.appendChild(el);
-                });
-                if (totalSources > INITIAL_SOURCES_TO_SHOW) {
-                    const remainingCount = totalSources - INITIAL_SOURCES_TO_SHOW;
-                    showAllBtn.textContent = `Show all sources (${remainingCount} more) ⌄`;
-                    showAllBtn.classList.remove('hidden');
-                    sourcesSummaryEl.textContent = `Showing top quality sources • ${INITIAL_SOURCES_TO_SHOW} of ${totalSources} sources`;
-                    showAllBtn.addEventListener('click', () => {
-                        document.querySelectorAll('.hidden-source').forEach(el => el.classList.remove('hidden-source'));
-                        showAllBtn.classList.add('hidden');
-                        sourcesSummaryEl.textContent = `Showing all ${totalSources} sources`;
-                    }, { once: true });
-                } else {
-                    sourcesSummaryEl.textContent = `Showing all ${totalSources} sources`;
+            try {
+                const r = await fetch(`https://streamed.pk/api/stream/${source.source}/${source.id}`);
+                const sList = await r.json();
+                
+                // FIX: Only append if streams exist to avoid broken empty boxes
+                if (sList && sList.length > 0) {
+                    sDiv.innerHTML = `<div style="margin-bottom:10px; font-weight:bold; text-transform:capitalize;">${source.source} Server</div>`;
+                    
+                    sList.forEach((st, idx) => {
+                        const row = document.createElement('a');
+                        row.className = 'stream-row';
+                        const q = st.hd ? 'hd' : 'sd';
+                        row.href = `#/${match.id}/${source.source}/${q}${st.streamNo}`;
+                        row.innerHTML = `
+                            <div><span class="quality-tag ${q}">${q.toUpperCase()}</span> Stream ${idx+1}</div>
+                            <div style="font-size:12px; color:#888;">${st.viewers || 0} Viewers</div>
+                        `;
+                        if(st.embedUrl === playerEl.src) row.style.borderColor = '#2ecc71'; 
+                        sDiv.appendChild(row);
+                    });
+                    container.appendChild(sDiv);
                 }
-            }
-        } else {
-            sourcesSummaryEl.textContent = 'No sources available';
-            streamsContainer.innerHTML = `<p class="no-results">No stream sources found for this match.</p>`;
-        }
+            } catch(e) { console.log(e); }
+        });
+
     } catch (err) {
-        console.error("Error loading watch page:", err);
-        titleEl.textContent = "Error Loading Stream";
-        descEl.textContent = `An error occurred: ${err.message}.`;
-        playerContainerEl.innerHTML = `<div class="error-message">${err.message}</div>`;
-        document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
+        console.error(err);
+        titleEl.textContent = "Stream Offline";
     }
 }
 
-// ===================================
-// CUSTOM DISCORD WIDGET
-// ===================================
-async function loadDiscordWidget() {
-    const serverId = "1422384816472457288";
-    const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
-    
-    const onlineCountEl = document.getElementById("discord-online-count");
-    const membersListEl = document.getElementById("discord-members-list");
-    const joinButton = document.getElementById("discord-join-button");
-    const widgetContainer = document.getElementById("discord-widget-container");
-
-    if (!widgetContainer) return;
-
+// --- 4. OPTIMIZED DISCORD WIDGET ---
+async function loadDiscord() {
+    const list = document.getElementById('discord-members-list');
+    const count = document.getElementById('discord-online-count');
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error('Failed to fetch Discord widget data');
-        }
-        const data = await response.json();
-
-        onlineCountEl.textContent = data.presence_count || '0';
+        const res = await fetch(`https://discord.com/api/guilds/${config.discordServerId}/widget.json`);
+        const data = await res.json();
+        count.innerText = data.presence_count;
+        document.getElementById('discord-join-button').href = data.instant_invite;
         
-        const inviteUrl = data.instant_invite;
-        if (inviteUrl && joinButton) {
-          joinButton.href = inviteUrl;
-        }
-
-        membersListEl.innerHTML = ''; 
-
-        const fragment = document.createDocumentFragment();
-
-        if (data.members && data.members.length > 0) {
-            const membersToShow = data.members.slice(0, 10);
-            
-            membersToShow.forEach(member => {
-                const li = document.createElement('li');
-                const avatarDiv = document.createElement('div');
-                avatarDiv.className = 'member-avatar';
-                const avatarImg = document.createElement('img');
-                avatarImg.src = member.avatar_url;
-                avatarImg.alt = member.username;
-                const onlineIndicator = document.createElement('span');
-                onlineIndicator.className = 'online-indicator';
-                avatarDiv.appendChild(avatarImg);
-                avatarDiv.appendChild(onlineIndicator);
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'member-name';
-                nameSpan.textContent = member.username;
-                li.appendChild(avatarDiv);
-                li.appendChild(nameSpan);
-                fragment.appendChild(li);
-            });
-
-        } else {
-            const noMembersLi = document.createElement('li');
-            noMembersLi.style.color = 'var(--text-secondary)';
-            noMembersLi.style.display = 'block';
-            noMembersLi.style.textAlign = 'center';
-            noMembersLi.textContent = 'No online members to display.';
-            fragment.appendChild(noMembersLi);
-        }
-
-        if (inviteUrl) {
-            const moreLi = document.createElement('li');
-            moreLi.className = 'more-members-link';
-            const p = document.createElement('p');
-            const moreLink = document.createElement('a');
-            moreLink.href = inviteUrl;
-            moreLink.target = '_blank';
-            moreLink.rel = 'noopener noreferrer';
-            moreLink.textContent = 'Discord!';
-            p.append('and more in our ', moreLink);
-            moreLi.appendChild(p);
-            fragment.appendChild(moreLi);
-        }
-        membersListEl.appendChild(fragment);
-
-    } catch (error) {
-        console.error("Error loading Discord widget:", error);
-        if (widgetContainer) {
-            widgetContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Could not load Discord widget.</p>';
-        }
-    }
+        list.innerHTML = '';
+        
+        // Limit to 5 members for clean look
+        data.members.slice(0, 5).forEach(m => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="member-wrapper">
+                    <img class="member-avatar" src="${m.avatar_url}" alt="${m.username}">
+                    <span class="member-status"></span>
+                </div>
+                <span class="member-name">${m.username}</span>
+            `;
+            list.appendChild(li);
+        });
+    } catch(e) { console.log("Discord Widget Error"); }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    initializeWatchPage();
-    loadDiscordWidget();
+// --- INIT ---
+document.addEventListener('DOMContentLoaded', () => {
+    initOverlay();
+    loadDiscord();
+    loadPage();
 });
-
-
-window.addEventListener('hashchange', initializeWatchPage);
+window.addEventListener('hashchange', loadPage);
