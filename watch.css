@@ -1,349 +1,287 @@
-/* ================================== */
-/*         THEME VARIABLES            */
-/* ================================== */
 :root {
-  --bg-primary: #0a0a0a; --bg-secondary: #161b22; --text-primary: #c9d1d9; --text-secondary: #8b949e; --accent-primary: #2f81f7; --accent-hover: #58a6ff; --border-color: #262626; --shadow-color: rgba(0,0,0,0.2); --placeholder-bg: #262626; --shimmer-color: rgba(255, 255, 255, 0.1); --accent-red: #e50914;
+  --bg-primary: #0a0a0a; 
+  --bg-secondary: #161b22; 
+  --text-primary: #e0e6ed; 
+  --text-secondary: #8b949e; 
+  --accent-blue: #2f81f7; 
+  --accent-green: #2ea043; 
+  --accent-gold: #f1c40f; 
+  --accent-red: #da3633;
+  --border-color: #30363d;
 }
 
-/* ================================== */
-/*          GENERAL STYLES            */
-/* ================================== */
+/* --- RESET & BASE --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg-primary); color: var(--text-primary); }
-.fullpage { padding: 0 5rem; } /* <-- Increased horizontal padding for desktop */
-.hidden { display: none !important; }
-
-/* ================================== */
-/*        SHARED COMPONENTS           */
-/* ================================== */
-.site-header { position: sticky; top: 0; left: 0; width: 100%; background: var(--bg-primary); border-bottom: 1px solid var(--border-color); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; margin-bottom: 15px; }
-.header-left { display: flex; align-items: center; gap: 12px; flex-grow: 1; min-width: 0; }
-.header-right { display: flex; align-items: center; gap: 12px; }
-.header-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.2s ease-in-out; cursor: pointer; white-space: nowrap; background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
-.header-btn:hover { background-color: #2a2a2a; border-color: var(--text-secondary); transform: translateY(-1px); }
-.header-btn-discord { background-color: #5865F2; color: #fff; border-color: #5865F2; margin-left: 5px;}
-.header-btn-discord:hover {background-color: #6a75f5;
-  border-color: #6a75f5;
-  box-shadow: 0 2px 8px rgba(88, 101, 242, 0.3);}
-.no-results { text-align: center; color: var(--text-secondary); font-size: 1.1rem; padding: 60px 20px; background-color: var(--bg-secondary); border-radius: 0.5rem; border: 1px solid var(--border-color); }
-
-/* ================================== */
-/*      WATCH PAGE SPECIFIC STYLES    */
-/* ================================== */
-.match-details-container { max-width: 900px; margin: 15px auto; padding: 1rem; }
-
-/* --- Stream Player --- */
-#stream-player-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; margin-bottom: 3rem; box-shadow: 0 8px 25px var(--shadow-color); }
-#stream-player { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-.error-message { color: #f56565; background-color: #4a2a2a; padding: 1rem; border-radius: 8px; text-align: center; }
-
-/* --- Watch Page Header --- */
-.watch-page-header { margin-bottom: 2rem; }
-#watch-title { font-size: clamp(1.5rem, 3vw, 2rem); }
-#watch-description { color: var(--text-primary); font-size: 1rem; line-height: 1.6; margin-top: 0.5rem; }
-
-/* --- Stream List Section (Shared styles from Match Info) --- */
-.viewers-count {color:#dc2626cc;}
-.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;}
-.section-header h2 { font-size: 1.5rem; }
-#sources-summary { font-size: 0.9rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1.5rem; padding-bottom: 1rem; min-height: 22px; }
-.stream-source { background-color: var(--bg-secondary); border: 1px solid #fbbf24b3; border-radius: 0.75rem; margin-bottom: 1.5rem; padding: 1rem 1.25rem; box-shadow: 0 4px 12px var(--shadow-color); }
-.stream-source.hidden-source { display: none; }
-.source-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.source-name { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
-.source-count { font-size: 0.9rem; font-weight: 500; color: var(--accent-red); background-color: #dc26261a; padding: 4px 10px; border-radius: 9999px; }
-.source-desc { display: block; margin-bottom: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; }
-.stream-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background-color: var(--bg-primary); border: 1px solid var(--border-color); margin: 0.5rem 0; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: var(--text-primary); }
-.stream-row:hover:not(.active) { background-color: #1a1a1a; border-color: var(--accent-primary); transform: translateY(-2px); }
-.stream-label { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; }
-.quality-tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 400; color: var(--accent-red); text-transform: uppercase; min-width: 35px; text-align: center; }
-.quality-tag.hd { background-color: #dc262633; }
-.quality-tag.sd { background-color: #26262680; color: var(--text-primary);}
-.stream-meta { display: flex; align-items: center; gap: 1rem; color: var(--text-secondary); font-size: 0.9rem; }
-.viewers-count, .stream-lang { display: flex; align-items: center; gap: 5px; flex-grow: 1;}
-.open-arrow { display: inline-flex; align-items: center; color: var(--text-secondary); opacity: 0.6; transition: all 0.2s ease; margin-left: auto;}
-.stream-row:hover .open-arrow { opacity: 1; color: var(--accent-hover); }
-
-/* --- ACTIVE STREAM ROW STYLING --- */
-.stream-row.active { background-color: #010416; border-left: 3px solid #dc2626cc; padding-left: calc(1rem - 3px); cursor: default; }
-.stream-row.active .open-arrow { display: none; }
-.status-running { font-size: 0.8rem; font-weight: 600; color: #dc2626cc; margin-left: auto; }
-
-.show-all-btn { display: block; width: 100%; text-align: center; padding: 12px; margin-top: 1rem; background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.show-all-btn:hover { background-color: #2a2a2a; border-color: var(--accent-primary); }
-.skeleton { background-color: var(--bg-secondary); color: transparent; border-radius: 6px; user-select: none; position: relative; overflow: hidden; display: inline-block; width: 100%; }
-.skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; transform: skewX(-20deg); background-image: linear-gradient(90deg, transparent, var(--shimmer-color), transparent); animation: shimmer 1.8s infinite cubic-bezier(0.4, 0.6, 1); }
-@keyframes shimmer { 100% { left: 150%; } }
-.skeleton-summary { height: 22px; border-radius: 4px; }
-.stream-source.is-loading { border-color: transparent; box-shadow: none; pointer-events: none; position: relative; min-height: 150px; }
-.is-loading > * { visibility: hidden; }
-.is-loading::after { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; transform: skewX(-20deg); background-image: linear-gradient(90deg, transparent, var(--shimmer-color), transparent); animation: shimmer 1.8s infinite; }
-@media (max-width: 768px) {
-  .site-header { padding: 8px 12px; }
-  .header-btn { padding: 8px 10px; font-size: 13px; }
-  #watch-title { font-size: 1.3rem; }
-  #watch-description { font-size: 0.9rem; }
-  .stream-row {align-items: flex-start; gap: 10px; }
-  .stream-meta { margin-right: auto;}
-  .stream-label { width: 100%; display: block;}
-  .status-running, .open-arrow { margin-left: auto; padding-left: 8px;}
-}
-@media (max-width: 480px) {
-  .header-left, .header-right{
-	  gap: 7px;
-  }
-	
-  .fullpage { padding: 0 0.5rem; }
-  
-  .source-header { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .source-name { font-size: 1.25rem; }
-  .match-details-container { padding: 0; }
-  .stream-row { padding: 0.65rem 0.4rem; }
-  .stream-source { padding: 1rem; }
-  .stream-meta { font-size: 0.8rem; }
-  .stream-label { font-size: 14px; }
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    background: var(--bg-primary); 
+    color: var(--text-primary); 
+    padding-bottom: 80px; 
+    overflow-x: hidden;
 }
 
-/* ================================== */
-/*    NEW STYLES FOR LAYOUT & WIDGET  */
-/* ================================== */
+/* --- NEW REVENUE HEADER --- */
+.site-header {
+    background: #050505; border-bottom: 1px solid var(--border-color);
+    padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+.header-brand {
+    font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; display: flex; align-items: center;
+}
+.header-brand i { color: var(--accent-red); }
+.text-highlight { color: var(--accent-blue); margin-left:3px;}
+.vip-btn {
+    background: linear-gradient(90deg, #ffd700, #f39c12);
+    color: #000; padding: 8px 16px; border-radius: 4px; text-decoration: none;
+    font-weight: 800; font-size: 13px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); transition: transform 0.2s;
+}
+.vip-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+
+/* --- LAYOUT GRID --- */
+.fullpage { padding: 0 2%; max-width: 1600px; margin: 20px auto; }
+
 .content-wrapper {
-  display: flex;
-  align-items: flex-start;
-  max-width: 1400px; /* Increased max-width for new padding */
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px; 
+    gap: 20px;
+    align-items: start;
 }
 
-.match-details-container {
-  flex-grow: 1;
+/* --- LEFT COLUMN --- */
+.match-details-container { width: 100%; }
+
+/* Titles */
+.watch-page-header { margin-bottom: 15px; }
+#watch-title { font-size: 1.5rem; margin-bottom: 5px; }
+#watch-description { font-size: 0.9rem; color: var(--text-secondary); }
+
+/* Native Server Selector */
+.server-selector-container {
+    background: var(--bg-secondary); padding: 10px; border-radius: 6px;
+    border: 1px solid var(--border-color); margin-bottom: 10px;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.server-label { font-size: 11px; font-weight: bold; color: var(--text-secondary); }
+.server-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.srv-btn {
+    padding: 6px 12px; border-radius: 4px; border: none; font-size: 12px; font-weight: 700;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+}
+.srv-btn.active { background: var(--accent-green); color: #fff; pointer-events: none; }
+.srv-btn.premium { background: #1f1f1f; color: #fff; border: 1px solid #444; transition: 0.2s; }
+.srv-btn.premium:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
+.srv-btn.gold { color: var(--accent-gold); border-color: #554b14; }
+.srv-btn.gold:hover { background: var(--accent-gold); color: #000; }
+
+/* Video Player */
+#stream-player-container {
+    position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
+    border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+#stream-player { width: 100%; height: 100%; position: absolute; top:0; left:0; }
+
+/* Video Overlay */
+.video-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); z-index: 50; display: flex;
+    align-items: center; justify-content: center; cursor: pointer;
+    transition: opacity 0.3s;
+}
+.overlay-content { text-align: center; }
+.play-button-pulse {
+    font-size: 40px; color: #fff; background: var(--accent-blue);
+    width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;
+    display: flex; align-items: center; justify-content: center;
+    padding-left: 5px; animation: pulse 1.5s infinite;
+    box-shadow: 0 0 20px rgba(47,129,247,0.5);
+}
+.overlay-content p { color: #fff; font-weight: bold; letter-spacing: 1px; }
+
+/* Live Odds Bar */
+.live-odds-wrapper {
+    background: linear-gradient(to right, #111, #1a1a1a);
+    border: 1px solid var(--border-color); border-radius: 8px;
+    padding: 15px; margin-top: 15px; margin-bottom: 20px;
+}
+.odds-header { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.live-dot { width: 8px; height: 8px; background: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+.odds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.odds-item {
+    background: #222; padding: 10px; border-radius: 4px; text-align: center;
+    text-decoration: none; color: #fff; transition: 0.2s; border: 1px solid #333;
+    display: flex; flex-direction: column;
+}
+.odds-item:hover { background: #2a2a2a; border-color: var(--accent-green); }
+.team-label { font-size: 11px; color: #aaa; text-transform: uppercase; }
+.odds-value { font-size: 16px; font-weight: 800; color: var(--accent-gold); }
+.odds-cta { display: block; text-align: center; font-size: 13px; color: var(--accent-blue); text-decoration: none; font-weight: bold; }
+
+/* --- RIGHT COLUMN (SIDEBAR) --- */
+.sidebar-wrapper {
+    display: flex; flex-direction: column; gap: 15px;
+    position: sticky; top: 80px; 
 }
 
-/* ================================== */
-/*    CUSTOM DISCORD WIDGET STYLES    */
-/* ================================== */
-.discord-sidebar {
-  width: 350px;
-  flex-shrink: 0;
-  height: auto;
-  position: sticky;
-  top: 80px;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 12px var(--shadow-color);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
+/* THE "GREEDY" AD */
+.side-by-side-ad {
+    display: flex; flex-direction: column; justify-content: space-between;
+    height: 360px; 
+    background: linear-gradient(145deg, #050505, #1a0b0b);
+    border: 1px solid #333; border-radius: 8px;
+    position: relative; overflow: hidden; text-decoration: none; color: #fff;
+    transition: transform 0.2s;
 }
-
-#discord-widget-container {
-  color: var(--text-primary);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.side-by-side-ad:hover { transform: scale(1.02); }
+.ad-neon-border {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px solid transparent; border-radius: 8px;
+    background: linear-gradient(45deg, gold, red, gold) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out; mask-composite: exclude;
+    opacity: 0.5; animation: borderRotate 4s linear infinite;
 }
-
-.discord-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+.ad-header {
+    background: rgba(255,0,0,0.2); padding: 10px; font-size: 14px; font-weight: bold; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-
-.discord-header h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 4px 0;
+.blink-text { color: red; animation: blink 1s infinite; }
+.ad-body {
+    flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px;
 }
-
-.discord-header h3 span {
-  color: var(--accent-red);
+.jackpot-amount {
+    font-size: 32px; font-weight: 900; color: var(--accent-gold);
+    text-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
 }
-
-.discord-header p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin: 0;
+.ad-promo-text { font-size: 16px; text-align: center; line-height: 1.4; }
+.ad-promo-text span { color: var(--accent-green); font-weight: bold; }
+.ad-cta-btn {
+    background: linear-gradient(to bottom, #e50914, #b2060e);
+    color: #fff; border: none; padding: 12px 30px; font-size: 18px; font-weight: bold;
+    border-radius: 4px; cursor: pointer; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+    animation: pulse 2s infinite; width: 100%; margin-top: 10px;
 }
-
-.discord-btn {
-  background-color: #5865F2;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
+.ad-footer {
+    padding: 10px; background: #000; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 11px; color: #888;
 }
+.ad-footer img { height: 15px; opacity: 0.8; }
 
-.discord-btn:hover {
-  background-color: #4752c4;
+/* --- OPTIMIZED DISCORD WIDGET --- */
+.discord-sidebar { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.discord-header { 
+    background: #202225; padding: 12px 15px; 
+    display: flex; justify-content: space-between; align-items: center; 
+    border-bottom: 1px solid #000;
 }
+.header-text h3 { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 2px;}
+.header-text p { font-size: 11px; color: #aaa; display: flex; align-items: center; gap: 4px; }
+.green-dot { color: #2ecc71; font-size: 10px; animation: blink 2s infinite; }
+.discord-btn { background: #5865F2; color: white; padding: 5px 12px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: bold; transition: 0.2s; }
+.discord-btn:hover { background: #4752c4; }
 
-.members-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
-  min-height: 300px;
+.members-list { list-style: none; padding: 10px; background: #2f3136; }
+.members-list li { 
+    display: flex; align-items: center; padding: 6px; border-radius: 4px;
+    transition: background 0.2s; 
 }
-
-.members-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
+.members-list li:hover { background: rgba(255,255,255,0.05); }
+.member-wrapper { position: relative; width: 30px; height: 30px; margin-right: 10px; }
+.member-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.member-status { 
+    position: absolute; bottom: -2px; right: -2px; 
+    width: 10px; height: 10px; background: #2ecc71; 
+    border: 2px solid #2f3136; border-radius: 50%; 
 }
+.member-name { font-size: 13px; color: #dcddde; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.member-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 12px;
-  position: relative;
+
+/* --- IN-FEED AD (FIXED MOBILE BADGE) --- */
+.stream-infeed-ad {
+    background: #1e1e1e; border: 1px solid #ffd700; border-radius: 6px;
+    margin-bottom: 15px; overflow: hidden;
 }
-
-.member-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: block;
+.infeed-content {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 15px; text-decoration: none; color: white;
 }
-
-.online-indicator {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 10px;
-  height: 10px;
-  background-color: #23a559; /* Discord's online green */
-  border-radius: 50%;
-  border: 2px solid var(--bg-secondary);
+.infeed-left { display: flex; align-items: center; gap: 10px; }
+.rec-tag { 
+    background: #ffd700; color: #000; font-size: 10px; font-weight: 900; 
+    padding: 3px 8px; border-radius: 3px; letter-spacing: 0.5px;
+    white-space: nowrap;
 }
+.infeed-btn { background: #2ecc71; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; white-space: nowrap; }
 
-.member-name {
-  font-weight: 500;
+/* --- STREAM LIST STYLES --- */
+.stream-source { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px; padding: 15px; }
+.stream-row { display: flex; justify-content: space-between; padding: 10px; background: var(--bg-primary); border: 1px solid var(--border-color); margin-bottom: 5px; border-radius: 4px; text-decoration: none; color: var(--text-primary); align-items: center; }
+.stream-row:hover { border-color: var(--accent-blue); }
+.quality-tag { padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; margin-right: 8px; }
+.quality-tag.hd { background: rgba(218, 54, 51, 0.2); color: var(--accent-red); }
+.quality-tag.sd { background: rgba(255,255,255,0.1); }
+
+/* --- PARTNERS SECTION --- */
+.partners-section { margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+.partners-section h3 { font-size: 16px; color: var(--text-secondary); text-transform: uppercase; text-align: center; margin-bottom: 20px; letter-spacing: 1px; }
+.partners-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
+.partner-logo { 
+    background: #111; color: #555; padding: 15px 30px; border-radius: 4px; text-decoration: none; font-weight: 900; font-size: 20px; border: 1px solid #222; transition: 0.3s; 
 }
+.partner-logo:hover { color: #fff; border-color: #555; transform: translateY(-3px); }
 
-.more-members-link {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.95rem;
-}
+/* --- FOOTER --- */
+footer { text-align: center; color: #555; font-size: 12px; padding: 30px 0; margin-top: 20px; border-top: 1px solid #111; }
+.disclaimer-box { max-width: 800px; margin: 0 auto 15px; background: #111; padding: 10px; border-radius: 4px; }
+.disclaimer-box h3 { color: #888; margin-bottom: 5px; }
 
-.more-members-link a {
-    color: var(--accent-red);
-    text-decoration: none;
-    font-weight: 700;
-}
+/* --- STICKY FOOTER AD --- */
+#sticky-bottom-ad-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: var(--bg-secondary); border-top: 2px solid var(--accent-blue); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 0 15px; }
+.sticky-content { display: flex; align-items: center; gap: 15px; }
+.sticky-btn { background: var(--accent-blue); color: #fff; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 13px; }
 
-.more-members-link a:hover {
-    text-decoration: underline;
-}
+/* --- ANIMATIONS --- */
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes borderRotate { 100% { filter: hue-rotate(360deg); } }
 
-/* Skeleton loader for Discord widget */
-.member-skeleton { display: flex; align-items: center; margin-bottom: 12px; }
-.avatar-skeleton { width: 32px; height: 32px; border-radius: 50%; margin-right: 12px; background-color: var(--border-color); }
-.name-skeleton { width: 120px; height: 16px; border-radius: 4px; background-color: var(--border-color); }
+/* --- MEDIA QUERIES (MOBILE & IPAD) --- */
+.mobile-only { display: none; }
+.desktop-only { display: flex; }
 
-/* ================================== */
-/*  RESPONSIVE ADJUSTMENTS FOR WIDGET */
-/* ================================== */
-@media (max-width: 1300px) {
-  .content-wrapper {
-    flex-direction: column;
-    align-items: center;
-  }
-  .discord-sidebar {
-    position: static;
-    width: 100%;
-    max-width: 900px;
-    margin-top: 1.5rem;
-  }
-}
-
-@media (max-width: 1024px) { /* Added new breakpoint for tablets */
-  .fullpage { padding: 0 2rem; }
+@media (max-width: 1024px) {
+    .content-wrapper { grid-template-columns: 1fr; gap: 0; }
+    .sidebar-wrapper { position: static; margin-top: 20px; width: 100%; }
+    .side-by-side-ad { 
+        height: auto; min-height: 250px; flex-direction: row; 
+        align-items: center; padding: 10px;
+    }
+    .ad-body { align-items: flex-start; padding: 10px; }
+    .jackpot-amount { font-size: 24px; }
 }
 
 @media (max-width: 768px) {
-  .fullpage { padding: 0 1rem; } /* Adjusted padding for smaller tablets */
-}
-
-.disclaimer-box{background:#111;color:#ddd;padding:15px 20px;margin-bottom:20px;border:1px solid #333;border-radius:8px;max-width:900px;margin-left:auto;margin-right:auto;text-align:left;box-shadow:0 0 10px rgba(0,0,0,.4)}.disclaimer-box h3{margin:0 0 8px;font-size:16px;color:#fc0;text-transform:uppercase;letter-spacing:1px}.disclaimer-box p{margin:0;font-size:14px;line-height:1.5;padding-bottom:10px!important}.disclaimer-box a{color:#fc0;text-decoration:underline}.disclaimer-box a:hover{color:#fff}
-
-footer {
-	text-align:center;
-	background:#0b1220;color:#aaa;padding:1rem;margin-top:2rem;
-}
-.footer-menu {
-	list-style:none;display:flex;gap:10px;
-	padding:0;margin-bottom:10px;justify-content:center;flex-wrap:wrap
-}
-.footer-menu a{color:#aaa;text-decoration:none;font-size:14px;display:inline-block;padding:5px}.footer-menu a:hover{color:#fc0}footer p{padding-bottom:50px}
-
-/* [MODIFIED] Sticky Footer Ad Styles */
-#sticky-ad-placeholder {
-  display: none; /* Hidden by default */
-  height: 44px; /* Approximate height of the ad */
-}
-
-#sticky-footer-ad{position:fixed;bottom:0;left:0;width:100%;background:#161b22;padding:10px;z-index:9999;font-family:Arial,sans-serif;color:#fff;display:flex;justify-content:center;align-items:center;box-shadow:0 -3px 10px rgba(0,0,0,.4);overflow:hidden}.ad-content{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:center;padding:0 20px}.emoji{font-size:24px;animation:1s infinite bounce}.cta-text{font-size:16px;font-weight:700;animation:2s infinite pulseText;white-space:nowrap;text-overflow:ellipsis}.download-btn{background:#111;color:#fff;padding:8px 20px;border-radius:25px;font-size:16px;font-weight:700;text-decoration:none;transition:.3s;animation:1.5s infinite alternate buttonPulse}.download-btn:hover{background:#fff;color:#111;transform:scale(1.1)}#close-ad{position:absolute;top:3px;right:5px;font-size:14px;padding:5px;border-radius:50%;background:#333;color:#fff;cursor:pointer;box-shadow:0 0 5px rgba(0,0,0,.5);transition:.3s;}#close-ad:hover,.badge.finished{background:red}
-
-/* [NEW] Show sticky ad only on mobile */
-@media (max-width: 768px) {
-  #sticky-ad-placeholder.is-mobile {
-    display: block; /* Show placeholder on mobile */
-  }
-  footer p {
-    padding-bottom: 60px; /* Add padding to footer to not be covered by ad */
-  }
-}
-
-@media (max-width: 480px) {
-  #sticky-footer-ad .ad-content {padding: 0 10px;}
-}
-
-/* Amazon Advertisement Section */
-.amazonadvertisement {
-  margin: 1.5rem auto;
-  max-width: 900px; /* keeps it big but not oversized */
-  width: 95%;
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 0 25px rgba(255, 94, 0, 0.6);
-  animation: adGlow 3s infinite alternate;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.amazonadvertisement:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 35px rgba(255, 94, 0, 0.9);
-}
-
-.amazonadvertisement img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.amazonadvertisement img:hover {
-  opacity: 0.9;
-}
-
-/* Subtle glowing animation around the ad */
-@keyframes adGlow {
-  0% {
-    box-shadow: 0 0 15px rgba(255, 94, 0, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 30px rgba(255, 94, 0, 0.9);
-  }
+    .site-header { padding: 10px; }
+    .header-brand { font-size: 1rem; }
+    .vip-btn { padding: 6px 10px; font-size: 11px; }
+    .fullpage { padding: 0 10px; }
+    
+    .side-by-side-ad { 
+        flex-direction: column; text-align: center; height: auto;
+        margin-bottom: 20px; 
+    }
+    .ad-body { align-items: center; }
+    
+    .odds-grid { grid-template-columns: 1fr; } 
+    .odds-item { flex-direction: row; justify-content: space-between; align-items: center; }
+    
+    /* FIX: Bet365 Mobile Badge Tweak */
+    .rec-tag { font-size: 9px; padding: 2px 5px; }
+    .infeed-content { padding: 10px; }
+    .infeed-left span[style*="font-weight:bold;"] { font-size: 13px; } /* Smaller text */
+    
+    .mobile-only { display: flex; }
+    .desktop-only { display: none; }
+    #sticky-bottom-ad-container { padding: 5px; height: 60px; }
+    .sticky-title { font-size: 13px; }
+    .sticky-desc { display: none; }
 }
