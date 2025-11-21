@@ -17,60 +17,51 @@
 </head>
 <body class="dark-theme">
 
-  <!-- REVENUE FOCUSED HEADER -->
-  <!-- No internal links. Only Brand + Affiliate CTA -->
+  <!-- HEADER -->
   <div class="site-header">
     <div class="header-brand">
       <i class="fa-solid fa-play-circle"></i><span class="text-highlight">HD</span>Stream
     </div>
     <div class="header-cta">
-      <a href="https://1wksrw.com/betting?open=register&p=xctu" target="_blank" class="vip-btn">
+      <a href="#" target="_blank" class="vip-btn dynamic-affiliate-link">
         <i class="fa-solid fa-crown"></i> VIP Access (No Ads)
       </a>
     </div>
   </div>
 
   <div class="fullpage">
-    
-    <!-- Main Grid Layout -->
     <div class="content-wrapper">
-		
-      <!-- LEFT COLUMN: Content & Stream -->
+        
+      <!-- LEFT COLUMN -->
       <main class="match-details-container">
 
         <div class="watch-page-header">
           <h1 id="watch-title" class="skeleton">Loading Match...</h1>
-          <p id="watch-description" class="skeleton"></p>
         </div>
 
-        <!-- [AD 1] Native Server Selector -->
+        <!-- [AD 1] Server Selector -->
         <div class="server-selector-container">
-            <div class="server-label"><i class="fa-solid fa-server"></i> SERVER:</div>
+            <div class="server-label"><i class="fa-solid fa-server"></i> SELECT SERVER:</div>
             <div class="server-options">
                 <button class="srv-btn active"><i class="fa-solid fa-play"></i> SD Stream</button>
-                <a href="https://1wksrw.com/betting?open=register&p=xctu" target="_blank" class="srv-btn premium">
+                <a href="#" target="_blank" class="srv-btn premium dynamic-affiliate-link">
                     <i class="fa-solid fa-bolt"></i> HD Server (Fast)
                 </a>
-                <a href="https://1wksrw.com/betting?open=register&p=xctu" target="_blank" class="srv-btn premium gold">
+                <a href="#" target="_blank" class="srv-btn premium gold dynamic-affiliate-link">
                     <i class="fa-solid fa-star"></i> VIP 4K
                 </a>
             </div>
         </div>
-		  
-        <!-- VIDEO PLAYER CONTAINER -->
+          
+        <!-- PLAYER -->
         <div id="stream-player-container" class="skeleton">
-            
-            <!-- [AD 2] "Click to Play" Overlay -->
+            <!-- [AD 2] Overlay -->
             <div id="video-overlay-ad" class="video-overlay">
                 <div class="overlay-content">
-                    <div class="play-button-pulse">
-                        <i class="fa-solid fa-play"></i>
-                    </div>
+                    <div class="play-button-pulse"><i class="fa-solid fa-play"></i></div>
                     <p>Click to Start Stream</p>
                 </div>
             </div>
-
-            <!-- Your Iframe -->
             <iframe id="stream-player" frameborder="0" allowfullscreen></iframe>
         </div>
 
@@ -80,68 +71,67 @@
                 <span class="live-dot"></span> <span id="odds-match-title">LIVE MATCH ODDS</span>
             </div>
             <div class="odds-grid">
-                <a href="https://1wksrw.com/betting?open=register&p=xctu" target="_blank" class="odds-item">
+                <a href="#" target="_blank" class="odds-item dynamic-affiliate-link">
                     <span class="team-label">Home</span>
                     <span class="odds-value">2.15</span>
                 </a>
-                <a href="https://1wksrw.com/betting?open=register&p=xctu" target="_blank" class="odds-item draw">
+                <a href="#" target="_blank" class="odds-item draw dynamic-affiliate-link">
                     <span class="team-label">Draw</span>
                     <span class="odds-value">3.40</span>
                 </a>
-                <a href="https://1wksrw.com/betting?open=register&p=xctu" target="_blank" class="odds-item">
+                <a href="#" target="_blank" class="odds-item dynamic-affiliate-link">
                     <span class="team-label">Away</span>
                     <span class="odds-value">2.90</span>
                 </a>
             </div>
-            <a href="https://1wksrw.com/?open=register&p=h8zt" target="_blank" class="odds-cta">
+            <a href="#" target="_blank" class="odds-cta dynamic-affiliate-link">
                 <i class="fa-solid fa-gift"></i> Claim $500 Welcome Bonus &raquo;
             </a>
         </div>
-		  
-        <!-- STREAM LIST SECTION -->
+          
+        <!-- STREAMS LIST -->
         <section id="streams-section">
           <div class="section-header">
             <h2>Stream Sources</h2>
           </div>
           <p id="sources-summary" class="skeleton-summary skeleton"></p>
           
-          <!-- Container where JS injects Ad FIRST, then streams -->
+          <!-- Container: JS Injects Ad + Streams here -->
           <div id="streams-container"></div>
+          
+          <button id="show-all-sources-btn" class="show-all-btn hidden"></button>
         </section>
       </main>
 
-      <!-- RIGHT COLUMN: Sticky Ad & Sidebar -->
+      <!-- RIGHT COLUMN -->
       <aside class="sidebar-wrapper">
         
-        <!-- [AD 4] THE "GREEDY" SIDE-BY-SIDE AD -->
-        <a href="https://1wksrw.com/?open=register&p=h8zt" target="_blank" class="side-by-side-ad">
+        <!-- [AD 4] Greedy Sidebar Ad -->
+        <a href="#" target="_blank" class="side-by-side-ad dynamic-affiliate-link">
             <div class="ad-neon-border"></div>
-            <div class="ad-header">
-                <span class="blink-text">● LIVE</span> JACKPOT
-            </div>
+            <div class="ad-header"><span class="blink-text">● LIVE</span> JACKPOT</div>
             <div class="ad-body">
                 <div class="jackpot-amount">$14,290.55</div>
                 <div class="ad-promo-text">Don't just watch. <span>WIN!</span></div>
                 <button class="ad-cta-btn">BET NOW</button>
             </div>
             <div class="ad-footer">
-                <img src="1win.webp" alt="Sponsor">
-                <span>Official Partner</span>
+                <img src="check.png" alt="Sponsor"> <span>Official Partner</span>
             </div>
         </a>
 
-        <!-- Discord Widget (Improved Design) -->
+        <!-- Discord Widget -->
         <div class="discord-sidebar">
           <div id="discord-widget-container">
             <div class="discord-header">
                 <div class="header-text">
                     <h3><i class="fa-brands fa-discord" style="color:#5865F2;"></i> Community</h3>
-                    <p><span class="green-dot">●</span> <span id="discord-online-count">0</span> Online Now</p>
+                    <p><span class="green-dot">●</span> <span id="discord-online-count">...</span> Online</p>
                 </div>
                 <a href="#" id="discord-join-button" class="discord-btn" target="_blank">Join Chat</a>
             </div>
             <ul id="discord-members-list" class="members-list">
-                <!-- JS Fills this -->
+                <li class="member-skeleton"><div class="avatar-skeleton"></div><div class="name-skeleton"></div></li>
             </ul>
           </div>
         </div>
@@ -149,20 +139,19 @@
       </aside>
     </div>
 
-    <!-- PARTNERS SECTION -->
+    <!-- PARTNERS -->
     <section class="partners-section">
-        <h3>Our Network</h3>
+        <h3>Trusted Partners</h3>
         <div class="partners-grid">
-            <a href="https://buffstreams.world/" class="partner-logo">Buffstreams</a>
-            <a href="https://sportsurge.shop/" class="partner-logo">Sportsurge</a>
-            <a href="https://streameastv2.world/" class="partner-logo">StreamEast</a>
-            
+            <a href="#" class="partner-logo dynamic-affiliate-link">1WIN</a>
+            <a href="#" class="partner-logo dynamic-affiliate-link">BET365</a>
+            <a href="#" class="partner-logo dynamic-affiliate-link">BETSSON</a>
+            <a href="#" class="partner-logo dynamic-affiliate-link">STAKE</a>
         </div>
     </section>
-
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
     <div class="disclaimer-box">
       <h3>Disclaimer</h3>
@@ -171,16 +160,16 @@
     <p>© 2025 HDStream. All rights reserved.</p>
   </footer>
 
-  <!-- Sticky Bottom Footer Ad (Preserved) -->
+  <!-- Sticky Footer Ad (STATIC) -->
   <div id="sticky-bottom-ad-container">
-    <span id="close-sticky-ad" onclick="document.getElementById('sticky-bottom-ad-container').style.display='none'">&times;</span>
+    <div id="close-sticky-ad" onclick="document.getElementById('sticky-bottom-ad-container').style.display='none'">&times;</div>
     <div class="sticky-content mobile-only">
        <span class="emoji">📲</span>
        <div class="sticky-text">
          <span class="sticky-title">Install App</span>
          <span class="sticky-desc">Lag-Free 4K Stream</span>
        </div>
-       <a href="https://tinyurl.com/BuffstreamsApp" class="sticky-btn" target="_blank">Download</a>
+       <a href="https://tinyurl.com/streameastv2" class="download-btn" rel="nofollow" target="_blank">⬇ Download</a>
     </div>
     <div class="sticky-content desktop-only">
        <i class="fa-brands fa-amazon" style="font-size:24px; margin-right:10px;"></i>
@@ -188,7 +177,7 @@
          <span class="sticky-title">Live Sports on Prime</span>
          <span class="sticky-desc">Start your 30-day free trial.</span>
        </div>
-       <a href="https://amzn.to/3JDrf3v" class="sticky-btn amazon-btn" target="_blank">Watch Free</a>
+       <a href="https://amzn.to/3WxvCzA" class="sticky-btn amazon-btn" target="_blank">Watch Free</a>
     </div>
   </div>
 
