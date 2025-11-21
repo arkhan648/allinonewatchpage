@@ -19,7 +19,9 @@ const OFFERS_BY_COUNTRY = {
         "https://amzn.to/4a1LYZh"
     ],
     "CA": [
-        "https://amzn.to/49xp5wO"
+        "https://record.betsson.com/_Ipto0Q-i5zSwcAgXsjz1uGNd7ZgqdRLk/1/",
+        "https://record.betsson.com/_Ipto0Q-i5zSMxelRx-4u3GNd7ZgqdRLk/1/",
+        "https://record.betsson.com/_Ipto0Q-i5zQMGjCE5hF4R2Nd7ZgqdRLk/1/"
     ],
     "BR": [
         "https://1wksrw.com/?open=register&p=h8zt"
@@ -353,3 +355,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('hashchange', initializeWatchPage);
+
