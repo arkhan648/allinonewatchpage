@@ -33,7 +33,8 @@ const OFFERS_BY_COUNTRY = {
 
 const CROSS_BORDER_RULES = {
     "https://1wksrw.com/betting?open=register&p=xctu": ["BR", "RU", "IN"], 
-    "https://1wksrw.com/?open=register&p=h8zt": ["BD", "PH", "AR"]
+    "https://1wksrw.com/?open=register&p=h8zt": ["BD", "PH", "AR"],
+    "https://record.betsson.com/_Ipto0Q-i5zR7HLc7-ZUbAGNd7ZgqdRLk/1/": ["BD", "AR", "BR", "CO", "GR"]
 };
 
 async function getHighTrafficCountry() {
@@ -345,3 +346,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('hashchange', initializeWatchPage);
+
