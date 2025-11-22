@@ -12,8 +12,8 @@ window.currentAffiliateLink = "https://amzn.to/44dBQJe"; // Default Global
 
 const OFFERS_BY_COUNTRY = {
     "US": [
-        "https://amzn.to/44dBQJe", 
-        "https://amzn.to/44dBQJe"
+        "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/", 
+        "https://record.webpartners.co/_QUm2k2WIfIoBfkWNuc6vQmNd7ZgqdRLk/1/"
     ],
     "GB": [
         "https://amzn.to/4a1LYZh"
@@ -21,7 +21,7 @@ const OFFERS_BY_COUNTRY = {
     "CA": [
         "https://record.betsson.com/_Ipto0Q-i5zSwcAgXsjz1uGNd7ZgqdRLk/1/",
         "https://record.betsson.com/_Ipto0Q-i5zSMxelRx-4u3GNd7ZgqdRLk/1/",
-        "https://record.betsson.com/_Ipto0Q-i5zQMGjCE5hF4R2Nd7ZgqdRLk/1/"
+        "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/"
     ],
     "BR": [
         "https://1wksrw.com/?open=register&p=h8zt"
@@ -36,7 +36,8 @@ const OFFERS_BY_COUNTRY = {
 const CROSS_BORDER_RULES = {
     "https://1wksrw.com/betting?open=register&p=xctu": ["BR", "RU", "IN"], 
     "https://1wksrw.com/?open=register&p=h8zt": ["BD", "PH", "AR"],
-    "https://record.betsson.com/_Ipto0Q-i5zR7HLc7-ZUbAGNd7ZgqdRLk/1/": ["AR", "BR", "CO", "GR"]
+    "https://record.betsson.com/_Ipto0Q-i5zR7HLc7-ZUbAGNd7ZgqdRLk/1/": ["AR", "BR", "CO", "GR"],
+    "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/": ["DE", "NO", "NZ", "PR", "PT", "AR", "CL", "PH", "SG"]
 };
 
 // --- NEW: HIGH TRAFFIC GEO-DETECTION (GITHUB PAGES OPTIMIZED - OPTION A) ---
@@ -355,4 +356,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('hashchange', initializeWatchPage);
+
 
