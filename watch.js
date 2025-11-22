@@ -37,8 +37,8 @@ const OFFERS_BY_COUNTRY = {
 const CROSS_BORDER_RULES = {
     "https://1wksrw.com/betting?open=register&p=xctu": ["BR", "RU", "IN"], 
     "https://1wksrw.com/?open=register&p=h8zt": ["BD", "PH", "AR"],
-    "https://record.betsson.com/_Ipto0Q-i5zR7HLc7-ZUbAGNd7ZgqdRLk/1/": ["AR", "BR", "CO", "GR"],
-    "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/": ["DE", "NO", "NZ", "PR", "PT", "AR", "CL", "PH", "SG"]
+    "https://record.betsson.com/_Ipto0Q-i5zR7HLc7-ZUbAGNd7ZgqdRLk/1/": ["AR", "BR", "CO", "EE", "ES", "KZ", "LV", "LT", "MX", "CL", "PE", "RS"],
+    "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/": ["DE", "NO", "NZ", "PR", "PT", "AR", "CL", "PH", "SG", "HR"]
 };
 
 // --- NEW: HIGH TRAFFIC GEO-DETECTION (GITHUB PAGES OPTIMIZED - OPTION A) ---
@@ -357,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('hashchange', initializeWatchPage);
+
 
 
 
