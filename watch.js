@@ -20,7 +20,6 @@ const OFFERS_BY_COUNTRY = {
     ],
     "CA": [
         "https://record.betsson.com/_Ipto0Q-i5zSwcAgXsjz1uGNd7ZgqdRLk/1/",
-        "https://record.betsson.com/_Ipto0Q-i5zSMxelRx-4u3GNd7ZgqdRLk/1/",
         "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/"
     ],
     "BR": [
@@ -355,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('hashchange', initializeWatchPage);
+
 
 
 
