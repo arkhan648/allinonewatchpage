@@ -28,9 +28,7 @@ const OFFERS_BY_COUNTRY = {
     ],
     // Fallback
     "Global": [
-        "https://1wksrw.com/betting?open=register&p=xctu",
-        "https://record.betsson.com/_Ipto0Q-i5zR7HLc7-ZUbAGNd7ZgqdRLk/1/",
-        "https://record.webpartners.co/_QUm2k2WIfIo1bkozPnn1SmNd7ZgqdRLk/1/"
+        "https://www.effectivegatecpm.com/mwvtqzkj?key=daf26372fb52174ce25eca816951dd61"
     ]
 };
 
@@ -356,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('hashchange', initializeWatchPage);
+
 
 
 
